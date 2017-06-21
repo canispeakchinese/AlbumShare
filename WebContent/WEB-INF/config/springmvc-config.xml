@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd     
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:component-scan base-package="controller" />
+	<context:component-scan base-package="org.apache.commons.dbcp2.BasicDataSource" />
+	<context:component-scan base-package="org.springframework.jdbc.core.JdbcTemplate" />
+	<context:component-scan base-package="org.springframework.web.filter" />
+	<context:component-scan base-package="dao" />
+	
+	<bean id="config"  
+       class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+       <property name="locations">  
+           <list>  
+              <value>classpath:db.properties</value>  
+           </list>  
+       </property>  
+    </bean>  
+    
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+		destroy-method="close">
+	    <property name="username" value="${db.username}"></property>
+	    <property name="password" value="${db.password}"></property>
+	    <property name="driverClassName" value="${db.driverClass}"></property>
+	    <property name="url" value="${db.jdbcUrl}"></property>
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	    <property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<bean id="mysqlDao" class="dao.MysqlDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+	</bean>
+	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/resource/messages" />
+	</bean>
+	
+	<bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" 
+	/>
+		
+
+	<mvc:annotation-driven />
+	<mvc:resources mapping="/css/**" location="/css/" />
+	<mvc:resources mapping="/*.html" location="/" />
+	<mvc:resources mapping="/img/**" location="/img/" />
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+</beans>
