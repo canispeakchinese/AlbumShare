@@ -9,12 +9,10 @@
 <style type="text/css">
 @import url("<c:url value="/css/bootstrap.css"/>");
 </style>
-<style type="text/css">@import url("<c:url value="/css/main.css"/>");</style>
 </head>
 <body>
 	
 <nav class="navbar navbar-default">
-
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -67,60 +65,8 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
-<h3 align="center"><c:out value="${error}" /></h3>
-
-<div class="container-fluid">			
-	<div class="row">
-		<div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 main">
-			<h2 class="page-header">添加新图片</h2>
-			
-			<form:form class="form-horizontal" commandName="uploadedPhoto"
-				action="/AlbumShare/upload" method="post" enctype="multipart/form-data">
-				<div class="form-group">
-					<label for="photoName" class="col-sm-2 control-label">图片名称（默认为文件名）</label>
-					<div class="col-sm-8">
-						<form:input class="form-control" id="photoName" path="photoName" />
-					</div>
-				</div>
-				
-				<p class="errorLine">
-           			<form:errors path="photoName" cssClass="error"/>
-       			</p>
-
-				<div class="form-group">
-					<label for="description" class="col-sm-2 control-label">描述</label>
-					<div class="col-sm-8">
-						<form:input class="form-control" id="description" path="description" />
-					</div>
-				</div>
-				
-				<p class="errorLine">
-           			<form:errors path="description" cssClass="error"/>
-       			</p>
-				
-				<div class="form-group">
-					<label for="image" class="col-sm-2 control-label">添加图片</label>
-					<div class="col-sm-8">
-						<form:input type="file" class="form-control" id="file" path="file" />
-					</div>
-				</div>
-				
-				<p class="errorLine">
-           			<form:errors path="file" cssClass="error"/>
-       			</p>
-				
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
-						<input class="btn btn-danger" id="reset" type="reset"
-							value="重置"> <input class="btn btn-primary"
-							id="submit" type="submit" value="添加">
-					</div>
-				</div>
-			</form:form>
-		</div>
-	</div>
-</div>
+	
+	<h3 align="center"><c:out value="${error}" /></h3>
 
 </body>
 </html>

@@ -2,33 +2,33 @@ package domain;
 
 import java.io.Serializable;
 
-public class PhotoInfor implements Serializable {
+import org.springframework.web.multipart.MultipartFile;
+
+public class UploadedPhoto implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private MultipartFile file;
 	private String photoName;
 	private String description;
 	private boolean isOpen;
-	private String comment;
 	
-	public PhotoInfor() {
+	public UploadedPhoto() {
 		
 	}
 	
-	public PhotoInfor(int id, String photoName, String description,
-			boolean isOpen, String comment) {
-		this.id = id;
+	public UploadedPhoto(MultipartFile file, String photoName, String description,
+			boolean isOpen) {
+		this.file = file;
 		this.photoName = photoName;
 		this.description = description;
 		this.isOpen = isOpen;
-		this.comment = comment;
 	}
 	
-	public int getId() {
-		return id;
+	public MultipartFile getFile() {
+		return file;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 	
 	public String getPhotoName() {
@@ -53,13 +53,5 @@ public class PhotoInfor implements Serializable {
 	
 	public void setIsOpen(boolean isOpen) {
 		this.isOpen = isOpen;
-	}
-	
-	public String getComment() {
-		return comment;
-	}
-	
-	public void setComment(String comment) {
-		this.comment = comment;
 	}
 }

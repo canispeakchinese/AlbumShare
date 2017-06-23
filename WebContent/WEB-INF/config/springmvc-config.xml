@@ -46,9 +46,10 @@
 		<property name="basename" value="/WEB-INF/resource/messages" />
 	</bean>
 	
-	<bean id="multipartResolver" 
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" 
-	/>
+	<bean id="multipartResolver"
+            class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="5000000000"/>
+    </bean>
 		
 
 	<mvc:annotation-driven />

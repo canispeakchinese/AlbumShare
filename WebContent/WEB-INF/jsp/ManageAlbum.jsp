@@ -7,7 +7,7 @@
 <head>
 <title><c:out value="${albumName}" /></title>
 <style type="text/css">
-@import url(../../css/bootstrap.css);
+@import url("<c:url value="/css/bootstrap.css"/>");
 </style>
 </head>
 <body>
@@ -70,11 +70,14 @@
 	<c:forEach var="photoInfor" items="${photoInfors}">
 	  <div class="col-sm-6 col-md-4">
 	    <div class="thumbnail">
-	      <c:url var="imgPath" value="../../img/${userId}/${albumName}/${photoInfor.photoName}" />
+	      <c:url var="imgPath" value="/img/${userId}/${albumId}/${photoInfor.id}" />
 	      <img src="${imgPath}" alt="${photoInfor.description}" /> 
 	      <div class="caption">
-	        <h3><c:out value="${photoInfor.description}" /></h3>
+	        <h3><c:out value="${photoInfor.photoName}" /></h3>
+	        <h5>描述:<c:out value="${photoInfor.description}" /></h5>
 	        <p><c:out value="${photoInfor.comment}" /></p>
+	        <a href="/AlbumShare/delete/${photoInfor.id}" >删除</a>
+	        <a href="/AlbumShare/photoinfor/${photoInfor.id}" >编辑</a>
 	      </div>
 	    </div>
 	  </div>
@@ -82,7 +85,7 @@
 	
 	<div class="col-sm-6 col-md-4">
 	  <div class="thumbnail">
-	    <c:url var="imgPath" value="../../img/添加新图片" />
+	    <c:url var="imgPath" value="/img/添加新图片" />
 	    <a href="/AlbumShare/addpicture">
 	   	  <img src="${imgPath}" />
 	    </a> 

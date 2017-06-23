@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class AlbumInfor implements Serializable {
 	private static final long serialVersionUID = 1L;
+	private int id;
 	private String albumName;
 	private String albumCover;
 	private int photoNum;
@@ -12,10 +13,19 @@ public class AlbumInfor implements Serializable {
 		
 	}
 	
-	public AlbumInfor(String albumName, String albumCover, int photoNum) {
+	public AlbumInfor(int id, String albumName, String albumCover, int photoNum) {
+		this.id = id;
 		this.albumName = albumName;
 		this.albumCover = albumCover;
 		this.photoNum = photoNum;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 	public void setAlbumName(String albumName) {

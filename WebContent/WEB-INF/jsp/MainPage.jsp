@@ -7,7 +7,7 @@
 <head>
 <title>主页</title>
 <style type="text/css">
-@import url(css/bootstrap.css);
+@import url("<c:url value="/css/bootstrap.css"/>");
 </style>
 </head>
 <body>
@@ -66,21 +66,32 @@
   </div><!-- /.container-fluid -->
 </nav>
 	
+	<h3 align="center"><c:out value="${error}" /></h3>
+	
 <div class="row">
 	<c:forEach var="albumInfor" items="${albumInfors}">
 	  <div class="col-sm-6 col-md-4">
 	    <div class="thumbnail">
-	      <c:url var="imgPath" value="img/${user.id}/${albumInfor.albumName}/${albumInfor.albumCover}" />
-	      <a href="/AlbumShare/showalbum/${user.id}/${albumInfor.albumName}">
+	      <c:url var="imgPath" value="img/${user.id}/${albumInfor.id}/${albumInfor.albumCover}" />
+	      <a href="/AlbumShare/showalbum/${user.id}/${albumInfor.id}">
 	        <img src="${imgPath}" alt="..." /> 
 	      </a>
 	      <div class="caption">
 	        <h3><c:out value="${albumInfor.albumName}" /></h3>
 	        <p>共有<c:out value="${albumInfor.photoNum}" />张相片</p>
+	        <a href="/AlbumShare/deletealbum/${albumInfor.id}." >删除相册</a>
 	      </div>
 	    </div>
 	  </div>
 	</c:forEach>
+	<div class="col-sm-6 col-md-4">
+	  <div class="thumbnail">
+	    <c:url var="imgPath" value="img/添加新图片" />
+	    <a href="/AlbumShare/addalbum">
+	   	  <img src="${imgPath}" />
+	    </a> 
+	  </div>
+	</div>
 </div>
 
 </body>

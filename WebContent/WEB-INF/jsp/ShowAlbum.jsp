@@ -7,7 +7,7 @@
 <head>
 <title><c:out value="${albumName}" /></title>
 <style type="text/css">
-@import url(../../css/bootstrap.css);
+@import url("<c:url value="/css/bootstrap.css"/>");
 </style>
 </head>
 <body>
@@ -70,7 +70,7 @@
 	<c:forEach var="photoInfor" items="${photoInfors}">
 	  <div class="col-sm-6 col-md-4">
 	    <div class="thumbnail">
-	      <c:url var="imgPath" value="../../img/${userId}/${albumName}/${photoInfor.photoName}" />
+	      <c:url var="imgPath" value="/img/${userId}/${albumId}/${photoInfor.id}" />
 	      <img src="${imgPath}" alt="${photoInfor.description}" /> 
 	      <div class="caption">
 	        <h3><c:out value="${photoInfor.description}" /></h3>
