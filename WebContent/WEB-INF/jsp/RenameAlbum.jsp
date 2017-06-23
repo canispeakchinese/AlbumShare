@@ -5,10 +5,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title><c:out value="${albumName}" /></title>
+<title>主页</title>
 <style type="text/css">
 @import url("<c:url value="/css/bootstrap.css"/>");
 </style>
+<style type="text/css">@import url("<c:url value="/css/main.css"/>");</style>
 </head>
 <body>
 	
@@ -47,21 +48,33 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-	
-<div class="row">
-	<c:forEach var="photoInfor" items="${photoInfors}">
-	  <div class="col-sm-6 col-md-4">
-	    <div class="thumbnail">
-	      <c:url var="imgPath" value="/img/${userId}/${albumId}/${photoInfor.id}" />
-	      <img src="${imgPath}" alt="${photoInfor.description}" /> 
-	      <div class="caption">
-	        <h3><c:out value="${photoInfor.description}" /></h3>
-	        <p><c:out value="${photoInfor.comment}" /></p>
-	      </div>
-	    </div>
-	  </div>
-	</c:forEach>
-</div>
+
+<h3 align="center"><c:out value="${error}" /></h3>
+
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 main">
+				<h2 class="page-header">相册重命名</h2>
+				<form class="form-horizontal" action="/AlbumShare/changealbum" method="post">
+					<div class="form-group">
+						<label for="albumName" class="col-sm-2 control-label">相册名</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="albumName" 
+							name="albumName" value="${albumName}">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<input class="btn btn-danger" id="reset" type="reset"
+								value="重置"> <input class="btn btn-primary"
+								id="submit" type="submit" value="添加">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
 </body>
 </html>

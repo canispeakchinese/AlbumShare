@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title><c:out value="${albumName}" /></title>
+<title>浏览所有公开图片</title>
 <style type="text/css">
 @import url("<c:url value="/css/bootstrap.css"/>");
 </style>
@@ -49,14 +49,15 @@
 </nav>
 	
 <div class="row">
-	<c:forEach var="photoInfor" items="${photoInfors}">
+	<c:forEach var="photo" items="${photos}">
 	  <div class="col-sm-6 col-md-4">
 	    <div class="thumbnail">
-	      <c:url var="imgPath" value="/img/${userId}/${albumId}/${photoInfor.id}" />
-	      <img src="${imgPath}" alt="${photoInfor.description}" /> 
+	      <c:url var="imgPath" value="/img/${photo.userId}/${photo.albumId}/${photo.photoId}" />
+	      <img src="${imgPath}" alt="${photo.description}" /> 
 	      <div class="caption">
-	        <h3><c:out value="${photoInfor.description}" /></h3>
-	        <p><c:out value="${photoInfor.comment}" /></p>
+	        <h3><c:out value="${photo.photoName}" /></h3>
+	        <h5>描述:<c:out value="${photo.description}" /></h5>
+	        <p><c:out value="${photo.comment}" /></p>
 	      </div>
 	    </div>
 	  </div>

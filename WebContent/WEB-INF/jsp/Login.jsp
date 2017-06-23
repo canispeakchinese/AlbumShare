@@ -14,6 +14,7 @@
 <body>
 	
 <a href="/AlbumShare/signup" class="navbar-link">注册</a>
+<a href="/AlbumShare/brower" class="navbar-link">游客浏览</a>
 <h3 align="center"><c:out value="${error}" /></h3>
 	
 <div class="container-fluid">			

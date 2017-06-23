@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import dao.MysqlDao;
 import domain.AlbumInfor;
+import domain.Photo;
 import domain.PhotoInfor;
 import domain.UploadedPhoto;
 import domain.User;
@@ -99,6 +100,11 @@ public class AlbumController {
 					+ "\n\t相片数量: " + temp.getPhotoNum());
 		}
 		return "MainPage";
+	}
+	
+	@RequestMapping(value = "/")
+	public String index() {
+		return "redirect:/login";
 	}
 	
 	@RequestMapping(value = "/login")
@@ -558,5 +564,61 @@ public class AlbumController {
 				photoInfor.getIsOpen(), photoInfor.getPhotoName(),
 				userId, albumId, photoId);
 		return "redirect:/showalbum/" + userId + "/" + albumId;
+	}
+
+	@RequestMapping(value = "/renamealbum/{albumId}")
+	public String renamealbum(Model model, HttpSession session,
+			@PathVariable("albumId") int albumId,
+			HttpServletRequest servletRequest) {
+		User user = (User) session.getAttribute("user");
+		if(user == null || user.getId() == -1) {
+			model.addAttribute("error", "拒绝访问");
+			return "Error";
+		}
+		String sql = "select albumname from album where userid = ?"
+				+ " and id = ?";
+		SqlRowSet result = mysqlDao.query(sql, user.getId(), albumId);
+		if(!result.next()) {
+			model.addAttribute("error", "该相册不存在");
+			return "Error";
+		}
+		session.setAttribute("albumId", albumId);
+		model.addAttribute("albumName", result.getString(1));
+		return "RenameAlbum";
+	}
+	
+	@RequestMapping(value = "/changealbum")
+	public String changealbum(String albumName, Model model, 
+			HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		int albumId = (int) session.getAttribute("albumId");
+		if(user == null || user.getId() == -1) {
+			model.addAttribute("error", "拒绝访问");
+			return "Error";
+		}
+		if(albumName == null)
+			albumName = "";
+		String sql = "update album set albumname = ? where userid = ? "
+				+ "and id = ?";
+		mysqlDao.update(sql, albumName, user.getId(), albumId);
+		return "redirect:/check-login";
+	}
+	
+	@RequestMapping(value = "/brower") 
+	public String brower(Model model, HttpSession session) {
+		LinkedList<Photo> photos = new LinkedList<Photo>();
+		String sql = "select userid, albumid, id, photoname, description,"
+				+ " comment from photo where open = ?";
+		SqlRowSet result = mysqlDao.query(sql, true);
+		while(result.next()) {
+			photos.add(new Photo(result.getInt(1), result.getInt(2),
+					result.getInt(3), result.getString(4),
+					result.getString(5), result.getString(6)));
+		}
+		model.addAttribute("photos", photos);
+		User user = (User) session.getAttribute("user");
+		if(user != null)
+			return "Visit";
+		return "Brower";
 	}
 }
