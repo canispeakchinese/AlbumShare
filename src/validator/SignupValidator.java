@@ -18,7 +18,5 @@ public class SignupValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "username.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "password.required");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "email.required");
-		if(user.getFacephoto() == null)
-			user.setFacephoto("base");
 	}
 }

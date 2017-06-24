@@ -19,7 +19,7 @@
 		<div class="row">
 			<div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 main">
 				<h2 class="page-header">注册</h2>
-				<form:form class="form-horizontal" commandName="user"
+				<form:form class="form-horizontal" commandName="user" enctype="multipart/form-data"
 					action="/AlbumShare/check-signup" method="post">
 					<div class="form-group">
 						<label for="username" class="col-sm-2 control-label">用户名</label>
@@ -55,11 +55,15 @@
        				</p>
 					
 					<div class="form-group">
-						<label for="facephoto" class="col-sm-2 control-label">头像</label>
+						<label for="image" class="col-sm-2 control-label">头像</label>
 						<div class="col-sm-8">
-							<form:input class="form-control" id="facephoto" path="facephoto" />
+							<form:input type="file" class="form-control" id="facephoto" path="facephoto" />
 						</div>
 					</div>
+					
+					<p class="errorLine">
+	           			<form:errors path="facephoto" cssClass="error"/>
+	       			</p>
 					
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">

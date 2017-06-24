@@ -55,7 +55,11 @@
 	      <c:url var="imgPath" value="/img/${userId}/${albumId}/${photoInfor.id}" />
 	      <img src="${imgPath}" alt="${photoInfor.description}" /> 
 	      <div class="caption">
-	        <h3><c:out value="${photoInfor.photoName}" /></h3>
+	        <h3>
+	        	<c:out value="${photoInfor.photoName}" />
+	        	<c:if test="${photoInfor.isOpen==true}">(已公开)</c:if>
+   				<c:if test="${photoInfor.isOpen==false}">(未公开)</c:if>
+   			</h3>
 	        <h5>描述:<c:out value="${photoInfor.description}" /></h5>
 	        <p><c:out value="${photoInfor.comment}" /></p>
 	        <a href="/AlbumShare/delete/${photoInfor.id}" >删除</a>

@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
@@ -160,7 +161,6 @@ public class AlbumController {
 		}
 		user.setId(result.getInt(1));
 		user.setEmail(result.getString(4));
-		user.setFacephoto(result.getString(5));
 		session.setAttribute("user", user);
 		logger.info("Login successful! User's id is: " + user.getId());
 		return getMainPageInfor(user, model);
@@ -186,7 +186,8 @@ public class AlbumController {
 	@RequestMapping(value = "/change-infor")
 	public String changeinfor(@ModelAttribute User user, 
 			HttpSession session, Model model,
-			BindingResult bindingResult) {
+			BindingResult bindingResult, 
+			HttpServletRequest servletRequest) {
 		User temp = (User) session.getAttribute("user");
 		if(temp == null || temp.getId() == -1) {
 			model.addAttribute("error", new String("拒绝访问"));
@@ -212,12 +213,23 @@ public class AlbumController {
 				return "Infor";
 			}
 		}
+		if(user.getFacephoto().getOriginalFilename().isEmpty() == false) {
+			File facephoto = new File(servletRequest.getServletContext()
+	                .getRealPath("/img") + "/" + temp.getId() + "/",
+	                "facephoto");
+			System.out.println("facephoto: " + facephoto);
+			try {
+				user.getFacephoto().transferTo(facephoto);
+			} catch (IllegalStateException | IOException e) {
+				model.addAttribute("error", "未能成功存储头像");
+			}
+		}
 		String sql = "update user set username = ?, password = ?,"
 				+ " email = ?, facephoto = ? where id = ?";
 		logger.info("change username: " + user.getUsername());
 		logger.info("change user's id: " + temp.getId());
 		mysqlDao.update(sql, user.getUsername(), user.getPassword(),
-				user.getEmail(), user.getFacephoto(), temp.getId());
+				user.getEmail(), "unused para", temp.getId());
 		user.setId(temp.getId());
 		session.setAttribute("user", user);
 		return getMainPageInfor(user, model);
@@ -263,10 +275,20 @@ public class AlbumController {
 			System.out.println("创建用户文件夹失败，请重试");
 			return "Signup";
 		}
-		
+		if(user.getFacephoto().getOriginalFilename().isEmpty() == false) {
+			File facephoto = new File(servletRequest.getServletContext()
+	                .getRealPath("/img") + "/" + userId + "/",
+	                "facephoto");
+			System.out.println("facephoto: " + facephoto);
+			try {
+				user.getFacephoto().transferTo(facephoto);
+			} catch (IllegalStateException | IOException e) {
+				model.addAttribute("error", "未能成功存储头像");
+			}
+		}
 		sql = "insert into user values(?, ?, ?, ?, ?)";
 		mysqlDao.update(sql, userId, user.getUsername(), user.getPassword(),
-				user.getEmail(), user.getFacephoto());
+				user.getEmail(), "unused para");
 		
 		user.setId(userId);
 		logger.info("用户注册成功，id为" + user.getId());
@@ -339,9 +361,8 @@ public class AlbumController {
                 + albumId + "/";
         logger.info("New Picture save at: " + path);
         
-        String sql = "select max(id) from photo where userid = ?"
-        		+ " and albumid = ?";
-        SqlRowSet result = mysqlDao.query(sql, userId, albumId);
+        String sql = "select max(id) from photo";
+        SqlRowSet result = mysqlDao.query(sql);
         int photoId = 1;
         if(result.next()) {
         	photoId = result.getInt(1) + 1;
@@ -362,10 +383,11 @@ public class AlbumController {
             model.addAttribute("error", new String("存储文件出错"));
 			return "Error";
         }
+        System.out.println("uploadedPhoto.isOpen: " + uploadedPhoto.getIsOpen());
         sql = "insert into photo values(?, ?, ?, ?, ?, ?, ?)";
         mysqlDao.update(sql, photoId, userId, albumId, 
         		uploadedPhoto.getDescription(),
-        		true, uploadedPhoto.getPhotoName(), "");
+        		uploadedPhoto.getIsOpen(), uploadedPhoto.getPhotoName(), "");
         sql = "update album set photonum = photonum+1 where userid"
         		+ " = ? and id = ?";
         mysqlDao.update(sql, userId, albumId);
@@ -560,6 +582,7 @@ public class AlbumController {
 		String sql = "update photo set description = ?, open = ?, "
 				+ "photoname = ? where userid = ? and albumid = ? "
 				+ "and id = ?";
+		System.out.println("photoInfor.isOpen: " + photoInfor.getIsOpen());
 		mysqlDao.update(sql, photoInfor.getDescription(),
 				photoInfor.getIsOpen(), photoInfor.getPhotoName(),
 				userId, albumId, photoId);

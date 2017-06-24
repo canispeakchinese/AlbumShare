@@ -83,7 +83,10 @@
 					<div class="form-group">
 						<label for="isOpen" class="col-sm-2 control-label">是否开放</label>
 						<div class="col-sm-8">
-							<form:input class="form-control" id="isOpen" value="${photoInfor.isOpen}" path="isOpen" />
+							<form:select class="form-control" id="isOpen" path="isOpen">  
+								<option value="true">是</option>  
+								<option selected="selected" value="false">否</option>  
+							</form:select> 
 						</div>
 					</div>
 					

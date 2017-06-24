@@ -2,6 +2,8 @@ package domain;
 
 import java.io.Serializable;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class User implements Serializable {
     
     private static final long serialVersionUID = 1520961851058396786L;
@@ -9,13 +11,13 @@ public class User implements Serializable {
     private String username;
     private String password;
     private String email;
-    private String facephoto;
+    private MultipartFile facephoto;
     
     public User() {
     }
     
     public User(int id, String username, String password, String email,
-    		String facephoto) {
+    		MultipartFile facephoto) {
     	this.id = id;
     	this.username = username;
     	this.password = password;
@@ -47,10 +49,10 @@ public class User implements Serializable {
     public void setEmail(String email) {
     	this.email = email;
     }
-    public String getFacephoto() {
+    public MultipartFile getFacephoto() {
     	return facephoto;
     }
-    public void setFacephoto(String facephoto) {
+    public void setFacephoto(MultipartFile facephoto) {
     	this.facephoto = facephoto;
     }
 }
