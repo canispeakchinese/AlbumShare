@@ -35,7 +35,12 @@ form label {
 #buttons {
 	text-align: right;
 }
-
+#nav-img{
+	height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    margin: 10px;
+}
 #errors, li {
 	color: red;
 }

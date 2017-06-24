@@ -9,6 +9,7 @@
 <style type="text/css">
 @import url("<c:url value="/css/bootstrap.css"/>");
 </style>
+<style type="text/css">@import url("<c:url value="/css/main.css"/>");</style>
 </head>
 <body>
 	

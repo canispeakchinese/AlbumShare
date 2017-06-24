@@ -9,6 +9,8 @@
 <style type="text/css">
 @import url("<c:url value="/css/bootstrap.css"/>");
 </style>
+<style> @import url("<c:url value="/css/main.css"/>")</style>
+
 </head>
 <body>
 	
@@ -32,7 +34,7 @@
         <li class="active"><a href="/AlbumShare/brower">浏览所有公开图片 <span class="sr-only">(current)</span></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-      	<li><img src="<c:url value="/img/${user.id}/facephoto" />" /></li>
+      	<li><img id = "nav-img" src="<c:url value="/img/${user.id}/facephoto" />" /></li>
         <li><a href="/AlbumShare/infor"><c:out value="${user.username}" /></a></li>
         <li class="dropdown">
           <a href="/AlbumShare/logout" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">注销<span class="caret"></span></a>
